@@ -1,0 +1,38 @@
+---
+title: "Untitled"
+subtitle: "`r format(Sys.time(), '%B %d, %Y')`"
+output: 
+  bookdown::pdf_document2:
+    number_sections: true
+    toc: true
+    toc_depth: 1
+    df_print: tibble
+    dev: cairo_pdf
+    latex_engine: xelatex
+geometry: margin = 0.5in
+fontsize: 11pt
+mainfont: Calibri
+header-includes:
+- \raggedright
+params:
+  eval_optional: false
+---
+
+```{r setup, include = FALSE}
+
+# load libraries
+library(tidyverse)
+library(wmo)
+
+# set global chunk options
+knitr::opts_chunk$set(echo = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE, 
+                      fig.align = "center") 
+
+theme_set(theme_wmo())
+```
+
+\newpage
+
+# Overview

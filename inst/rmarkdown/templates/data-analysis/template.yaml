@@ -1,0 +1,4 @@
+name: Analysis
+description: >
+  Template for general data analysis. Defaults for PDF output.
+create_dir: false
