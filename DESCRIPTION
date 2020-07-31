@@ -20,4 +20,5 @@ BugReports: https://github.com/wmoldham/wmo/issues
 Imports: 
     dplyr,
     ggplot2,
-    magrittr
+    magrittr,
+    polynom
