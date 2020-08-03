@@ -1,6 +1,6 @@
 Package: wmo
 Title: Personal Utility Functions
-Version: 0.0.1.9000
+Version: 0.0.1.9001
 Authors@R: 
     person(given = "William",
            family = "Oldham",

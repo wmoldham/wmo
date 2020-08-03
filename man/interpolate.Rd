@@ -19,11 +19,9 @@ This function takes a model object and a data frame containing new y values
 and will interpolate the associated x values. This is useful for determining
 sample concentrations from a standard curve. The intention is that it will
 operate similarly to \code{predict()}. Currently, it will support polynomial fits.
-}
-\details{
-There is nothing yet in the function that protects from multiple roots being
-returned. In addition, it will return \code{NA} if the new x values lie outside of
-the range of the x values in the model.
+The function will return \code{NA} if the new y value is outside the range of the
+standard curve. For polynomial fits, there must be only a single solution in
+the range of the standard curve!
 }
 \examples{
 x <- seq(from = 2, to = 10, by = 2)

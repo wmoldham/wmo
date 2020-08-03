@@ -4,10 +4,9 @@
 #' and will interpolate the associated x values. This is useful for determining
 #' sample concentrations from a standard curve. The intention is that it will
 #' operate similarly to `predict()`. Currently, it will support polynomial fits.
-#'
-#' There is nothing yet in the function that protects from multiple roots being
-#' returned. In addition, it will return `NA` if the new x values lie outside of
-#' the range of the x values in the model.
+#' The function will return `NA` if the new y value is outside the range of the
+#' standard curve. For polynomial fits, there must be only a single solution in
+#' the range of the standard curve!
 #'
 #' @param new_df Data frame containing new y values
 #' @param model Linear model
@@ -21,11 +20,15 @@
 #' m <- lm(y ~ x)
 #' new_y <- data.frame(y = seq(from = 1, to = 11, by = 2))
 #' interpolate(new_y, m)
- interpolate <- function(new_df, model) {
+interpolate <- function(new_df, model) {
   x <- stats::model.frame(model)[[deparse(model$terms[[3]])]]
   p <- polynom::polynomial(stats::coefficients(model))
   new_y <- as.list(new_df[[deparse(model$terms[[2]])]])
-  new_x <- unlist(lapply(new_y, function(y) solve(p, y)))
-  new_x <- round(new_x, digits = 8)
-  replace(new_x, new_x < min(x) | new_x > max(x), NA)
+  new_x <- unlist(lapply(new_y, function(y) {
+    roots <- solve(p, y)
+    roots <- round(roots, digits = 8)
+    root <- roots[which(Im(roots) == 0 & Re(roots) >= min(x) & Re(roots) <= max(x))]
+    ifelse(identical(root, numeric(0)), NA, Re(root))
+  }))
+  new_x
 }
