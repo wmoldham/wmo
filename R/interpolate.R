@@ -27,7 +27,7 @@ interpolate <- function(new_df, model) {
   new_x <- unlist(lapply(new_y, function(y) {
     roots <- solve(p, y)
     roots <- round(roots, digits = 8)
-    root <- roots[which(Im(roots) == 0 & Re(roots) >= min(x) & Re(roots) <= max(x))]
+    root <- roots[which(Im(roots) == 0 & Re(roots) >= 0 & Re(roots) <= 1.25 * max(x))]
     ifelse(identical(root, numeric(0)), NA, Re(root))
   }))
   new_x
