@@ -1,6 +1,6 @@
 Package: wmo
 Title: Personal Utility Functions
-Version: 0.0.1.9002
+Version: 0.0.2.9000
 Authors@R: 
     person(given = "William",
            family = "Oldham",
@@ -21,4 +21,5 @@ Imports:
     dplyr,
     ggplot2,
     magrittr,
-    polynom
+    polynom,
+    rlang

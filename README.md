@@ -32,6 +32,16 @@ approach.
 
 Personalized `ggplot2` theme.
 
+#### interpolate
+
+Similar to `predict` except calculates *x* when given *y* from linear
+model objects.
+
+#### named\_group\_split
+
+Wrapper around `dplyr::group_split` that will name the resulting list of
+tibbles using the group variable(s).
+
 ## Data
 
 #### correction\_factors
