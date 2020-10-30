@@ -10,3 +10,7 @@
 # wmo 0.0.2.9000
 
 * Added the `named_group_split` function as formulated [here](https://github.com/tidyverse/dplyr/issues/4223).
+
+# wmo 0.0.3.9000
+
+* Added the `%nin%` function. 
