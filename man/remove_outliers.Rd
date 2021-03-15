@@ -14,9 +14,9 @@ remove_outliers(tbl_df, column, remove = FALSE)
 \item{remove}{If TRUE, removes outlier observations from returned tibble}
 }
 \value{
-If remove = FALSE, a tibble containing a new column, \code{filtered},
-where filtered values have been replaced by NA. If remove = TRUE, outlier
-values have been removed from the tibble.
+If \code{remove == FALSE}, a tibble containing a new column, \code{filtered},
+where filtered values have been replaced by NA. If \code{remove == TRUE},
+outlier values have been removed from the tibble.
 }
 \description{
 This function takes a tibble and will remove outliers from a specific column
