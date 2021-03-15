@@ -14,3 +14,5 @@
 # wmo 0.0.3.9000
 
 * Added the `%nin%` function. 
+* `remove_outliers` will now accept unquoted column names.
+* Added `remove_nested_outliers` that works on grouped tibbles.
