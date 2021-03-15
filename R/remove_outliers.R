@@ -75,5 +75,5 @@ remove_nested_outliers <- function(tbl_df, column, remove = FALSE) {
         remove = remove
       )
     ) %>%
-    tidyr::unnest(c(data))
+    tidyr::unnest(c(.data$data))
 }
