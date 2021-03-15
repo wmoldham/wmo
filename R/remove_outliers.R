@@ -8,9 +8,9 @@
 #' @param column Column name of tibble from which outliers are to be removed
 #' @param remove If TRUE, removes outlier observations from returned tibble
 #'
-#' @return If remove = FALSE, a tibble containing a new column, `filtered`,
-#'   where filtered values have been replaced by NA. If remove = TRUE, outlier
-#'   values have been removed from the tibble.
+#' @return If `remove == FALSE`, a tibble containing a new column, `filtered`,
+#'   where filtered values have been replaced by NA. If `remove == TRUE`,
+#'   outlier values have been removed from the tibble.
 #'
 #' @importFrom stats mad median
 #' @importFrom dplyr bind_cols filter select
@@ -20,7 +20,8 @@
 #' @examples
 #' remove_outliers(ggplot2::diamonds, "price")
 remove_outliers <- function(tbl_df, column, remove = FALSE) {
-  x <- tbl_df[[column]]
+  col <- ensym(column)
+  x <- tbl_df[[col]]
   y <- replace(x, which(abs(x - median(x)) / mad(x) > 2), NA)
   z <- dplyr::bind_cols(tbl_df, filtered = y)
 
