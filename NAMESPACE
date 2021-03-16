@@ -2,6 +2,7 @@
 
 export("%nin%")
 export(clean_tech_reps)
+export(interp_data)
 export(interpolate)
 export(make_std_curves)
 export(make_std_plots)
