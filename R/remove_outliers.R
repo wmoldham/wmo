@@ -93,14 +93,14 @@ remove_nested_outliers <- function(tbl_df, column, remove = FALSE) {
 clean_tech_reps <- function(df) {
   tidyr::pivot_longer(
     data = df,
-    cols = a:c,
+    cols = .data$a:.data$c,
     names_to = "replicate",
     values_to = "value"
   ) %>%
-    dplyr::group_by(dplyr::across(-c(replicate, value))) %>%
+    dplyr::group_by(dplyr::across(-c(.data$replicate, .data$value))) %>%
     dplyr::mutate(
-      value = replace(value, which(abs(value - median(value)) / mad(value) > 2), NA)
+      value = replace(.data$value, which(abs(.data$value - median(.data$value)) / mad(.data$value) > 2), NA)
     ) %>%
-    dplyr::summarise(value = mean(value, na.rm = TRUE)) %>%
+    dplyr::summarise(value = mean(.data$value, na.rm = TRUE)) %>%
     dplyr::ungroup()
 }

@@ -25,4 +25,9 @@ Imports:
     polynom,
     rlang,
     tidyr,
-    readxl
+    readxl,
+    furrr,
+    modelr,
+    broom,
+    stringr,
+    tidyselect

@@ -3,6 +3,8 @@
 export("%nin%")
 export(clean_tech_reps)
 export(interpolate)
+export(make_std_curves)
+export(make_std_plots)
 export(named_group_split)
 export(read_multi_excel)
 export(remove_nested_outliers)

@@ -1,3 +1,75 @@
+#' Generate standard curves
+#'
+#' This function takes a tibble, groups by all variables except for concentration
+#' and value, fits a linear model, extracts summary statistics, and generates
+#' a plot. These linear models can then be used to interpolate values.
+#'
+#' @param df A tibble containing columns `conc` and `value` for generating a
+#'     standard curve.
+#'
+#' @return A tibble with the original `data`, linear models, summary statistics,
+#'     and plots of the standard curves.
+#' @export
+#'
+make_std_curves <- function(df) {
+  df %>%
+    dplyr::filter(!is.na(.data$conc)) %>%
+    dplyr::select(tidyselect::where(~all(!is.na(.)))) %>%
+    dplyr::group_by(dplyr::across(-c(.data$conc, .data$value))) %>%
+    tidyr::nest() %>%
+    dplyr::mutate(
+      title = stringr::str_c(!!!rlang::syms(dplyr::groups(.data)), sep = "_")
+    ) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(
+      model = furrr::future_map(.data$data, ~lm(value ~ conc, data = .x, na.action = modelr::na.warn)),
+      summary = furrr::future_map(.data$model, broom::glance),
+      plots = furrr::future_map2(.data$data, .data$title, make_std_plots)
+    ) %>%
+    dplyr::group_by(
+      dplyr::across(
+        -c(.data$data, .data$title, .data$model, .data$summary, .data$plots)
+      )
+    )
+}
+
+
+#' Generate generic standard curves
+#'
+#' @param df A tibble containing data for a standard curve
+#' @param title Optional to label the standard curve
+#'
+#' @return A ggplot
+#' @export
+#'
+make_std_plots <- function(df, title = NULL) {
+  ggplot2::ggplot(df) +
+    ggplot2::aes(x = .data$conc, y = .data$value) +
+    ggplot2::geom_smooth(
+      method = "lm",
+      formula = y ~ x,
+      color = "gray20",
+      se = FALSE
+    ) +
+    ggplot2::geom_point(
+      size = 3,
+      alpha = 0.3,
+      color = "blue"
+    ) +
+    ggplot2::stat_summary(
+      fun = "mean",
+      size = 4,
+      geom = "point",
+      alpha = 0.8,
+      color = "blue"
+    ) +
+    ggplot2::labs(
+      x = "Concentration",
+      y = "Value",
+      title = title
+    )
+}
+
 #' Interpolate x values from a standard curve
 #'
 #' This function takes a model object and a data frame containing new y values
