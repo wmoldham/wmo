@@ -3,6 +3,7 @@
 export("%nin%")
 export(interpolate)
 export(named_group_split)
+export(read_multi_excel)
 export(remove_nested_outliers)
 export(remove_outliers)
 export(theme_wmo)

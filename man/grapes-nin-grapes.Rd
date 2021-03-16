@@ -12,6 +12,6 @@ x \%nin\% y
 \item{y}{The values to be matched against}
 }
 \description{
-Binary operator that returnrs a logical vector returning \code{TRUE} if there is
+Binary operator that returns a logical vector returning \code{TRUE} if there is
 not a match for its left operand.
 }
