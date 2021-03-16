@@ -1,4 +1,5 @@
 utils::globalVariables("where")
+utils::globalVariables(".")
 
 #' @keywords internal
 #' @importFrom magrittr %>%

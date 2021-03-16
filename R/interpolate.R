@@ -2,7 +2,8 @@
 #'
 #' This function takes a tibble, groups by all variables except for concentration
 #' and value, fits a linear model, extracts summary statistics, and generates
-#' a plot. These linear models can then be used to interpolate values.
+#' a plot. These linear models can then be used to interpolate values. Note that
+#' one must have a `future::plan` in place.
 #'
 #' @param df A tibble containing columns `conc` and `value` for generating a
 #'     standard curve.
@@ -15,7 +16,7 @@ make_std_curves <- function(df) {
   df %>%
     dplyr::filter(!is.na(.data$conc)) %>%
     dplyr::select(where(~all(!is.na(.)))) %>%
-    dplyr::group_by(dplyr::across(-c(conc, value))) %>%
+    dplyr::group_by(dplyr::across(-c(.data$conc, .data$value))) %>%
     tidyr::nest() %>%
     dplyr::mutate(
       title = stringr::str_c(!!!rlang::syms(dplyr::groups(.)), sep = "_")
@@ -28,7 +29,7 @@ make_std_curves <- function(df) {
     ) %>%
     dplyr::group_by(
       dplyr::across(
-        -c(data, title, model, summary, plots)
+        -c(.data$data, .data$title, .data$model, .data$summary, .data$plots)
       )
     )
 }

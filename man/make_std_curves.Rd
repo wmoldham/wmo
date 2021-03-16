@@ -17,5 +17,6 @@ and plots of the standard curves.
 \description{
 This function takes a tibble, groups by all variables except for concentration
 and value, fits a linear model, extracts summary statistics, and generates
-a plot. These linear models can then be used to interpolate values.
+a plot. These linear models can then be used to interpolate values. Note that
+one must have a \code{future::plan} in place.
 }
