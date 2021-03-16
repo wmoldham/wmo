@@ -15,7 +15,7 @@ make_std_curves <- function(df) {
   df %>%
     dplyr::filter(!is.na(.data$conc)) %>%
     dplyr::select(where(~all(!is.na(.)))) %>%
-    dplyr::group_by(dplyr::across(-c(.data$conc, .data$value))) %>%
+    dplyr::group_by(dplyr::across(-c(conc, value))) %>%
     tidyr::nest() %>%
     dplyr::mutate(
       title = stringr::str_c(!!!rlang::syms(dplyr::groups(.data)), sep = "_")
@@ -28,7 +28,7 @@ make_std_curves <- function(df) {
     ) %>%
     dplyr::group_by(
       dplyr::across(
-        -c(.data$data, .data$title, .data$model, .data$summary, .data$plots)
+        -c(data, title, model, summary, plots)
       )
     )
 }
