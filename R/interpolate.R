@@ -71,6 +71,7 @@ make_std_plots <- function(df, title = NULL) {
     )
 }
 
+
 #' Interpolate x values from a standard curve
 #'
 #' This function takes a model object and a data frame containing new y values
@@ -104,4 +105,26 @@ interpolate <- function(new_df, model) {
     ifelse(identical(root, numeric(0)), NA, Re(root))
   }))
   new_x
+}
+
+
+#' Interpolate concentrations when given unknowns and models
+#'
+#'
+#' @param df A tibble containing the raw data
+#' @param std A tibble containing the model fits
+#'
+#' @return A tibble of interpolated values
+#' @export
+#'
+interp_data <- function(df, std) {
+  df %>%
+    dplyr::filter(is.na(.data$conc)) %>%
+    dplyr::select(where(~all(!is.na(.)))) %>%
+    dplyr::group_by(dplyr::across(dplyr::group_vars(.data$std))) %>%
+    tidyr::nest() %>%
+    dplyr::left_join(dplyr::select(.data$std, .data$model)) %>%
+    dplyr::mutate(conc = purrr::map2(.data$data, .data$model, wmo::interpolate)) %>%
+    tidyr::unnest(c(.data$data, .data$conc)) %>%
+    dplyr::select(-c(.data$model, .data$value))
 }
