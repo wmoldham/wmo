@@ -77,3 +77,30 @@ remove_nested_outliers <- function(tbl_df, column, remove = FALSE) {
     ) %>%
     tidyr::unnest(c(.data$data))
 }
+
+
+#' Pivot and remove outlying technical replicates from columns a:c
+#'
+#' This function will combine columns labeled a:c, group by the remaining
+#' variables in the tibble, and remove outliers based on the median absolute
+#' deviation.
+#'
+#' @param df A tibble containing technical replicates in columns labeled a:c.
+#'
+#' @return A tibble containing summarized data for the technical replicates.
+#' @export
+#'
+clean_tech_reps <- function(df) {
+  tidyr::pivot_longer(
+    data = df,
+    cols = a:c,
+    names_to = "replicate",
+    values_to = "value"
+  ) %>%
+    dplyr::group_by(dplyr::across(-c(replicate, value))) %>%
+    dplyr::mutate(
+      value = replace(value, which(abs(value - median(value)) / mad(value) > 2), NA)
+    ) %>%
+    dplyr::summarise(value = mean(value, na.rm = TRUE)) %>%
+    dplyr::ungroup()
+}
