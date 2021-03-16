@@ -123,7 +123,7 @@ interp_data <- function(df, std) {
     dplyr::select(where(~all(!is.na(.)))) %>%
     dplyr::group_by(dplyr::across(dplyr::group_vars(std))) %>%
     tidyr::nest() %>%
-    dplyr::left_join(dplyr::select(.data$std, .data$model)) %>%
+    dplyr::left_join(dplyr::select(std, .data$model)) %>%
     dplyr::mutate(conc = purrr::map2(.data$data, .data$model, wmo::interpolate)) %>%
     tidyr::unnest(c(.data$data, .data$conc)) %>%
     dplyr::select(-c(.data$model, .data$value))
