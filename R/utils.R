@@ -33,3 +33,30 @@ read_multi_excel <- function(excel_file_list) {
   ) %>%
     rlang::set_names(sheets)
 }
+
+
+#' Save multiple ggplots
+#'
+#' @param plots List of plots to save
+#' @param names Base filenames of plots
+#' @param path Directory to save plots
+#' @param width Plot width in cm
+#' @param height Plot height in cm
+#'
+#' @export
+#'
+print_plots <- function(plots, names, path, width = 20, height = 15) {
+  furrr::future_walk2(
+    plots,
+    names,
+    ~ ggplot2::ggsave(
+      filename = stringr::str_c(.y, ".pdf"),
+      path = path,
+      plot = .x,
+      device = cairo_pdf,
+      width = width,
+      height = height,
+      units = "cm"
+    )
+  )
+}
