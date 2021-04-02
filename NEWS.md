@@ -16,3 +16,5 @@
 * Added the `%nin%` function. 
 * `remove_outliers` will now accept unquoted column names.
 * Added `remove_nested_outliers` that works on grouped tibbles.
+* Added functions for calculating standard curves and interpolating data.
+* Add key for HMDB IDs for metabolomics platform.
