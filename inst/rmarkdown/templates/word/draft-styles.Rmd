@@ -2,7 +2,9 @@
 title: "Untitled"
 author: "Author"
 date: "Date"
-output: word_document
+output: 
+  bookdown::word_document2:
+    number_sections: false
 ---
 
 ```{r setup, include=FALSE}
