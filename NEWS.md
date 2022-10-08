@@ -6,6 +6,8 @@
 * Added functions for calculating standard curves and interpolating data.
 * Add key for HMDB IDs for metabolomics platform.
 * Changed `ggplot2` theme to decrease tick width.
+* Add `tidygraph` object for human PPI.
+* Add `testthat` support.
 
 # wmo 0.0.2.9000
 
