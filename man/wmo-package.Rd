@@ -6,8 +6,7 @@
 \alias{wmo-package}
 \title{wmo: Personal Utility Functions}
 \description{
-Makes commonly used utility functions, data sets, and document
-    templates available in a package.
+Makes commonly used utility functions, data sets, and document templates available in a package.
 }
 \seealso{
 Useful links:
